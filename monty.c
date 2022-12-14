@@ -29,11 +29,6 @@ int read_lines(FILE *file)
 			exit_status = unknown_opcode(opcode, line_number);
 			break;
 		}
-		if (op_data == 0)
-		{
-			free_stack(&stack);
-			int_error(line_number);
-		}
 		op_func(&stack, line_number);
 	}
 	free_stack(&stack);

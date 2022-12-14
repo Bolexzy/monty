@@ -20,7 +20,7 @@ void monty_push(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	if (op_data < 0 || op_data > 9)
+	if (op_data < 0 || op_data > 9 || op_data == 0)
 	{
 		int_error(line_number);
 		return;
