@@ -3,6 +3,7 @@
 int unknown_opcode(char *opcode, unsigned int line_number);
 int malloc_error(void);
 int int_error(unsigned int line_number);
+int pop_error(unsigned int line_number);
 
 /**
  * unknown_opcode - Prints unknown instruction error message.
@@ -38,5 +39,17 @@ int malloc_error(void)
 int int_error(unsigned int line_number)
 {
 	fprintf(stderr, "L%u: usage: push integer\n", line_number);
+	return (EXIT_FAILURE);
+}
+
+/**
+ * pop_error - Prints pop error messages for empty stacks.
+ * @line_number: Line number in script where error occured.
+ *
+ * Return: (EXIT_FAILURE) always.
+ */
+int pop_error(unsigned int line_number)
+{
+	fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
 	return (EXIT_FAILURE);
 }

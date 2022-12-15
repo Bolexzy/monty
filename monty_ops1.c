@@ -2,6 +2,7 @@
 
 void monty_push(stack_t **stack, unsigned int line_number);
 void monty_pall(stack_t **stack, unsigned int line_number);
+void monty_pop(stack_t **stack, unsigned int line_number);
 
 
 /**
@@ -16,7 +17,7 @@ void monty_push(stack_t **stack, unsigned int line_number)
 
 	if (!isonlydigit(gv.op_arg))
 	{
-		int_error(line_number);
+		gv.errno = int_error(line_number);
 		return;
 	}
 
@@ -82,4 +83,27 @@ void monty_pint(stack_t **stack, unsigned int line_number)
 	printf("%d\n",  temp->next->n);
 	(void)line_number;
 }
+
+/**
+ * monty_pop - Removes the top value element of a stack_t linked list.
+ * @stack: A pointer to the top mode node of a stack_t linked list
+ * @line_number: The instruction line number of a Monty bytecodes file.
+ */
+void monty_pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *next = NULL;
+
+	if ((*stack)->next == NULL)
+	{
+		gv.errno = pop_error(line_number);
+		return;
+	}
+
+	next = (*stack)->next->next;
+	free((*stack)->next);
+	if (next)
+		next->prev = *stack;
+	(*stack)->next = next;
+}
+
 

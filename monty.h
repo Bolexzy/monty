@@ -26,6 +26,7 @@ typedef struct global_var
 {
 	char *op_cmd;
 	char* op_arg;
+	int errno;
 }  global_v;
 
 extern global_v gv;
@@ -68,6 +69,7 @@ void (*handle_operation(char *opcode))(stack_t **stack, unsigned int line_number
 void monty_push(stack_t **stack, unsigned int line_number);
 void monty_pall(stack_t **stack, unsigned int line_number);
 void monty_pint(stack_t **stack, unsigned int line_number);
+void monty_pop(stack_t **stack, unsigned int line_number);
 
 /* monty_ops2.c */
 int isonlydigit(char *s);
@@ -81,5 +83,6 @@ void free_stack(stack_t **stack);
 int unknown_opcode(char *opcode, unsigned int line_number);
 int int_error(unsigned int line_number);
 int malloc_error(void);
+int pop_error(unsigned int line_number);
 
 #endif /* monty.h */

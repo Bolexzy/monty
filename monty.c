@@ -1,6 +1,6 @@
 #include "monty.h"
 
-global_v gv = {NULL, NULL};
+global_v gv = {NULL, NULL, 0};
 
 int free_memory(stack_t *stack, FILE *file, char *linebuf, int exit_status);
 
@@ -73,6 +73,12 @@ int read_file(FILE *file)
 			else
 				gv.op_arg = garg[1];
 			op_func(&stack, line_number);
+			if (gv.errno != 0)
+			{
+				exit_status = gv.errno;
+				break;
+			}
+
 		}
 	}
 	return (free_memory(stack, file, buffer, exit_status));
