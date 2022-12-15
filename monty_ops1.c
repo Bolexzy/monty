@@ -2,8 +2,9 @@
 
 void monty_push(stack_t **stack, unsigned int line_number);
 void monty_pall(stack_t **stack, unsigned int line_number);
+void monty_pint(stack_t **stack, unsigned int line_number);
 void monty_pop(stack_t **stack, unsigned int line_number);
-
+void monty_swap(stack_t **stack, unsigned int line_number);
 
 /**
  * monty_push - Pushes a value to a stack_t linked list.
@@ -106,4 +107,28 @@ void monty_pop(stack_t **stack, unsigned int line_number)
 	(*stack)->next = next;
 }
 
+/**
+ * monty_swap - Swaps the top two value elements of a stack_t linked list.
+ * @stack: A pointer to the top mode node of a stack_t linked list.
+ * @line_number: The current working line number of a Monty bytecodes file.
+ */
+void monty_swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *top1 = (*stack)->next;
+	stack_t *top2;
 
+	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
+	{
+		gv.errno = short_stack_error(line_number, "swap");
+		return;
+	}
+
+	top2 = (*stack)->next->next;
+	(*stack)->next->next = top2->next;
+	top1->prev = top2;
+	if (top2->next)
+		top2->next->prev = top1;
+	top2->next = top1;
+	top2->prev = *stack;
+	(*stack)->next = top2;
+}

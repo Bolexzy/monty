@@ -1,26 +1,35 @@
 #include "monty.h"
 
-int isonlydigit(char *s);
+void monty_add(stack_t **stack, unsigned int line_number);
+void monty_nop(stack_t **stack, unsigned int line_number);
 
 /**
- * isonlydigit - checks if a string contains only digits
- * @s: string to be checked
- * Description: checks if a string contains only digit
- * Return: 1 if string contains only didgit
- *         0 if string has at lest one non-digit character
+ * monty_add - Adds the top two values of a stack_t linked list.
+ * @stack: A pointer to the top mode node of a stack_t linked list.
+ * @line_number: The instruction line number of a Monty bytecodes file.
+ *
+ * Description: The result is stored in the top second value node
+ *              from the top and the top node/value is removed.
  */
-int isonlydigit(char *s)
+void monty_add(stack_t **stack, unsigned int line_number)
 {
-	if (s == NULL)
-		return (0);
-	if (s[0] == '\0')
-		return (0);
-	while (*s != '\0')
+	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
-		if (*s < '0' || *s > '9')
-			return (0);
-		s++;
+		gv.errno = short_stack_error(line_number, "add");
+		return;
 	}
-	return (1);
+
+	(*stack)->next->next->n += (*stack)->next->n;
+	monty_pop(stack, line_number);
 }
 
+/**
+ * monty_nop - Does absolutely nothing for the Monty opcode 'nop'.
+ * @stack: A pointer to the top mode node of a stack_t linked list.
+ * @line_number: The instruction line number of a Monty bytecodes file.
+ */
+void monty_nop(stack_t **stack, unsigned int line_number)
+{
+	(void) stack;
+	(void) line_number;
+}

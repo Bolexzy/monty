@@ -17,6 +17,9 @@ void (*handle_operation(char *opcode))(stack_t **, unsigned int)
 		{"pall", monty_pall},
 		{"pint", monty_pint},
 		{"pop", monty_pop},
+		{"swap", monty_swap},
+		{"add", monty_add},
+		{"nop", monty_nop},
 		{NULL, NULL}
 	};
 	i = 0;
