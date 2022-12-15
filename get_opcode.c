@@ -1,5 +1,7 @@
 #include "monty.h"
 
+
+
 /**
  * handle_operation - MAtchees an opcode with its corresponding function.
  * @opcode: The opcode to check.
@@ -13,6 +15,7 @@ void (*handle_operation(char *opcode))(stack_t **, unsigned int)
 	instruction_t op_funcs[] = {
 		{"push", monty_push},
 		{"pall", monty_pall},
+		{"pint", monty_pint},
 		{NULL, NULL}
 	};
 	i = 0;

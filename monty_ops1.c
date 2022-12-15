@@ -20,12 +20,12 @@ void monty_push(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	if (op_data < 0 || op_data > 9 || op_data == 0)
+	if (gv.op_arg < 0 || gv.op_arg > 9)
 	{
 		int_error(line_number);
 		return;
 	}
-	new->n = op_data;
+	new->n = gv.op_arg;
 	if (check_mode(*stack) == STACK)
 	{
 		tmp = (*stack)->next;
@@ -63,3 +63,20 @@ void monty_pall(stack_t **stack, unsigned int line_number)
 	}
 	(void)line_number;
 }
+
+/**
+ * monty_pint - Prints the top value of a stack_t linked list.
+ * @stack: A pointer to the top mode node of a stack_t linked list.
+ * @line_number: The instruction line number of a Monty bytecodes file.
+ */
+void monty_pint(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp = *stack;
+
+	if (temp->next == NULL)
+		return;
+
+	printf("%d\n",  temp->next->n);
+	(void)line_number;
+}
+

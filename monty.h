@@ -4,12 +4,31 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <ctype.h>
 
 #define STACK 0
 #define QUEUE 1
+#define DELIMS " \n\t\a\b"
 
-extern int op_data;
+/**
+* struct global_var - this structure contains all our global variable
+* @op_argument: argument passed to push
+* @op_cmd: opcode
+*
+* Description: carries values through the program
+*/
+typedef struct global_var
+{
+	char *op_cmd;
+	int op_arg;
+}  global_v;
+
+extern global_v gv;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -42,12 +61,16 @@ typedef struct instruction_s
 } instruction_t;
 
 /* monty.c*/
-int read_lines(FILE *file);
+int read_file(FILE *file);
 void (*handle_operation(char *opcode))(stack_t **stack, unsigned int line_number);
 
 /* monty_ops1.c */
 void monty_push(stack_t **stack, unsigned int line_number);
 void monty_pall(stack_t **stack, unsigned int line_number);
+void monty_pint(stack_t **stack, unsigned int line_number);
+
+/* monty_ops2.c */
+int isonlydigit(char *s);
 
 /* stack.c */
 int init_stack(stack_t **stack);

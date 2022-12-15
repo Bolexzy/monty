@@ -1,42 +1,84 @@
 #include "monty.h"
 
-int op_data = 0;
+global_v gv = {NULL, INT_MIN};
+
+int free_memory(stack_t *stack, FILE *file, char *linebuf, int exit_status);
+
 
 /**
- * read_lines - Reads and executes monty bytecodes script.
+ * free_memory- free all allocated memory within the program
+ * and returns exit status.
+ * @stack: stack to deallocate
+ * @file: pointer to an opened file to be closed
+ * @linebuf: Line buffer for read bytecode file
+ * @exit_status: the exit code the program exits with
+ *
+ * Return: EXIT_SUCCESS on success, respective error code on failure.
+ */
+int free_memory(stack_t *stack, FILE *file, char *linebuf, int exit_status)
+{
+	free_stack(&stack);
+
+	if (file)
+		fclose(file);
+	if (linebuf && *linebuf == 0)
+	{
+		free(linebuf);
+		return (malloc_error());
+	}
+
+	free(linebuf);
+	return (exit_status);
+}
+
+
+/**
+ * read_file - Reads and executes monty bytecodes script.
  * @file: File pointer to an open Monty bytecodes script.
  *
  * Return: EXIT_SUCCESS on success, respective error code on failure.
  */
-int read_lines(FILE *file)
+int read_file(FILE *file)
 {
 	stack_t *stack = NULL;
-	char opcode[5];
+	char *buffer = NULL;
 	int exit_status = EXIT_SUCCESS;
+	size_t length = 0;
 	unsigned int line_number = 0;
 	void (*op_func)(stack_t**, unsigned int);
+	char *garg[2] = {NULL, NULL};
 
 	if (init_stack(&stack) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-
-	while (fscanf(file, "%s%d", opcode, &op_data) >= 1)
+	while (getline(&buffer, &length, file) != -1)
 	{
 		line_number++;
-		op_func = handle_operation(opcode);
-		if (op_func == NULL)
+		garg[0] = strtok(buffer, DELIMS);
+		gv.op_cmd = garg[0];
+		if (garg[0] && garg[0][0] != '#')
 		{
-			free_stack(&stack);
-			exit_status = unknown_opcode(opcode, line_number);
-			break;
+			op_func = handle_operation(gv.op_cmd);
+			if (op_func == NULL)
+			{
+				free_stack(&stack);
+				exit_status = unknown_opcode(garg[0], line_number);
+				break;
+			}
+			garg[1] = strtok(NULL, DELIMS);
+			if (garg[1] != NULL)
+			{
+				if (strcmp(gv.op_cmd, "push") == 0 && !isonlydigit(garg[1]))
+				{
+					exit_status = int_error(line_number);
+					break;
+				}
+				gv.op_arg = atoi(garg[1]);
+			}
+			op_func(&stack, line_number);
 		}
-		op_func(&stack, line_number);
 	}
-	free_stack(&stack);
-	fclose(file);
-
-	return (exit_status);
+	return (free_memory(stack, file, buffer, exit_status));
 }
-
 
 /**
  * main - the entry point for Monty Interp
@@ -64,6 +106,6 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	exit_status = read_lines(file);
+	exit_status = read_file(file);
 	return (exit_status);
 }
