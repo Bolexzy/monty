@@ -12,6 +12,13 @@ void monty_pall(stack_t **stack, unsigned int line_number);
 void monty_push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp, *new;
+	int n;
+
+	if (!isonlydigit(gv.op_arg))
+	{
+		int_error(line_number);
+		return;
+	}
 
 	new = malloc(sizeof(stack_t));
 	if (!new)
@@ -20,12 +27,8 @@ void monty_push(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	if (gv.op_arg < 0 || gv.op_arg > 9)
-	{
-		int_error(line_number);
-		return;
-	}
-	new->n = gv.op_arg;
+	n = atoi(gv.op_arg);
+	new->n = n;
 	if (check_mode(*stack) == STACK)
 	{
 		tmp = (*stack)->next;

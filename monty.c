@@ -1,6 +1,6 @@
 #include "monty.h"
 
-global_v gv = {NULL, INT_MIN};
+global_v gv = {NULL, NULL};
 
 int free_memory(stack_t *stack, FILE *file, char *linebuf, int exit_status);
 
@@ -65,15 +65,13 @@ int read_file(FILE *file)
 				break;
 			}
 			garg[1] = strtok(NULL, DELIMS);
-			if (garg[1] != NULL)
+			if (!garg[1] && strcmp(garg[0], "push") == 0)
 			{
-				if (strcmp(gv.op_cmd, "push") == 0 && !isonlydigit(garg[1]))
-				{
-					exit_status = int_error(line_number);
-					break;
-				}
-				gv.op_arg = atoi(garg[1]);
+				exit_status = int_error(line_number);
+				break;
 			}
+			else
+				gv.op_arg = garg[1];
 			op_func(&stack, line_number);
 		}
 	}

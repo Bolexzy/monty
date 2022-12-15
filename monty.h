@@ -25,7 +25,7 @@
 typedef struct global_var
 {
 	char *op_cmd;
-	int op_arg;
+	char* op_arg;
 }  global_v;
 
 extern global_v gv;
