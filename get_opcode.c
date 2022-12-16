@@ -22,6 +22,8 @@ void (*handle_operation(char *opcode))(stack_t **, unsigned int)
 		{"nop", monty_nop},
 		{"sub", monty_sub},
 		{"div", monty_div},
+		{"mul", monty_mul},
+		{"mod", monty_mod},
 		{NULL, NULL}
 	};
 	i = 0;
