@@ -17,15 +17,16 @@
 
 /**
 * struct global_var - this structure contains all our global variable
-* @op_argument: argument passed to push
+* @op_arg: argument passed to push
 * @op_cmd: opcode
+* @errno: exit status
 *
 * Description: carries values through the program
 */
 typedef struct global_var
 {
 	char *op_cmd;
-	char* op_arg;
+	char *op_arg;
 	int errno;
 }  global_v;
 
@@ -42,9 +43,9 @@ extern global_v gv;
  */
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -57,13 +58,13 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /* monty.c*/
 int read_file(FILE *file);
-void (*handle_operation(char *opcode))(stack_t **stack, unsigned int line_number);
+void (*handle_operation(char *opcode))(stack_t **, unsigned int);
 
 /* monty_ops1.c */
 void monty_push(stack_t **stack, unsigned int line_number);
@@ -75,6 +76,8 @@ void monty_swap(stack_t **stack, unsigned int line_number);
 /* monty_ops2.c */
 void monty_add(stack_t **stack, unsigned int line_number);
 void monty_nop(stack_t **stack, unsigned int line_number);
+void monty_sub(stack_t **stack, unsigned int line_number);
+void monty_div(stack_t **stack, unsigned int line_number);
 
 int isonlydigit(char *s);
 

@@ -20,6 +20,8 @@ void (*handle_operation(char *opcode))(stack_t **, unsigned int)
 		{"swap", monty_swap},
 		{"add", monty_add},
 		{"nop", monty_nop},
+		{"sub", monty_sub},
+		{"div", monty_div},
 		{NULL, NULL}
 	};
 	i = 0;
