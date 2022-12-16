@@ -46,7 +46,7 @@ void monty_pchar(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	if ((*stack)->next->n < 0 || (*stack)->next->n > 127)
+	if ((*stack)->next->n < 0 || (*stack)->next->n >= 128)
 	{
 		gv.errno = pchar_error(line_number, "value out of range");
 		return;
@@ -66,7 +66,7 @@ void monty_pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = (*stack)->next;
 
-	while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n <= 127))
+	while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n < 128))
 	{
 		printf("%c", tmp->n);
 		tmp = tmp->next;
