@@ -66,6 +66,10 @@ typedef struct instruction_s
 int read_file(FILE *file);
 void (*handle_operation(char *opcode))(stack_t **, unsigned int);
 
+/* data_format.c */
+void monty_stack(stack_t **stack, unsigned int line_number);
+void monty_queue(stack_t **stack, unsigned int line_number);
+
 /* monty_ops1.c */
 void monty_push(stack_t **stack, unsigned int line_number);
 void monty_pall(stack_t **stack, unsigned int line_number);

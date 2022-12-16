@@ -28,6 +28,8 @@ void (*handle_operation(char *opcode))(stack_t **, unsigned int)
 		{"pstr", monty_pstr},
 		{"rotl", monty_rotl},
 		{"rotr", monty_rotr},
+		{"stack", monty_stack},
+		{"queue", monty_queue},
 		{NULL, NULL}
 	};
 	i = 0;
