@@ -82,6 +82,8 @@ void monty_mul(stack_t **stack, unsigned int line_number);
 
 /* monty_ops3.c */
 void monty_mod(stack_t **stack, unsigned int line_number);
+void monty_pchar(stack_t **stack, unsigned int line_number);
+void monty_pstr(stack_t **stack, unsigned int line_number);
 
 int isonlydigit(char *s);
 
@@ -96,5 +98,8 @@ int int_error(unsigned int line_number);
 int malloc_error(void);
 int pop_error(unsigned int line_number);
 int short_stack_error(unsigned int line_number, char *op);
+
+/* error_2.c */
+int pchar_error(unsigned int line_number, char *message);
 
 #endif /* monty.h */
