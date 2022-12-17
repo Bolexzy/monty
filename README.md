@@ -1,6 +1,5 @@
-# Monty
+# Monty - The monty program | Alx 0x19. C - Stacks, Queues 
 
-The monty program | Alx 0x19. C - Stacks, Queues 
 Monty is an interpreter of Monty ByteCodes files, which is a scripting language just like Python.
 
 ## Description 
